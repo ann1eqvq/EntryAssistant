@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState, useRef } from 'react';
+import html2canvas from 'html2canvas';
 import { EntryCard } from './EntryCard';
 import { JournalEntry, LOCAL_STORAGE_KEY_HISTORY } from '../types';
 import { Archive, Trash2, CheckSquare, XSquare, Layers, AlertTriangle, Image, FileText, LayoutList, AlignJustify, Download } from 'lucide-react';
@@ -126,12 +127,6 @@ export const History: React.FC = () => {
     setIsProcessing(true);
 
     try {
-      const html2canvas = (window as any).html2canvas;
-      if (!html2canvas) {
-        alert("Image generation library not loaded. Please refresh.");
-        return;
-      }
-
       // Allow DOM to update with selected style
       await new Promise(resolve => setTimeout(resolve, 300));
 
