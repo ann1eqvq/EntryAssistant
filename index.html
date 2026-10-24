@@ -1,259 +1,80 @@
-<!doctype html>
-<html lang="zh-Hant" class="scroll-smooth">
+<!DOCTYPE html>
+<html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>星座每日運勢 • 個人星像儀盤專尊奢版</title>
-    <!-- Tailwind Play CDN -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' style='stop-color:%2338bdf8;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%236366f1;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='25' fill='url(%23grad)' /%3E%3Ctext x='50' y='57' font-family='sans-serif' font-weight='bold' font-size='60' fill='white' text-anchor='middle' dominant-baseline='middle'%3E會%3C/text%3E%3C/svg%3E">
+    <title>分錄小幫手</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
-              sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-              mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "monospace"]
+              sans: ['"Zen Maru Gothic"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              primary: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                400: '#38bdf8',
+                500: '#0ea5e9',
+                600: '#0284c7',
+              },
+              paper: '#fdfbf7',
             }
-          }
-        }
+          },
+        },
       }
     </script>
-    <!-- Elegant Fonts (Inter, Playfair Display for Serifs, JetBrains Mono for Technical details) -->
+    <!-- Importing Zen Maru Gothic -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Huninn&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-    
-    <style type="text/css">
-      @keyframes spin-slow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      .animate-spin-slow {
-        animation: spin-slow 20s linear infinite;
-      }
-
-      @keyframes pulse-slow {
-        0%, 100% { opacity: 0.15; }
-        50% { opacity: 0.45; }
-      }
-      .animate-pulse-slow {
-        animation: pulse-slow 5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-      }
-
-      @keyframes ping-slow {
-        0% { transform: scale(1); opacity: 0.4; }
-        100% { transform: scale(1.4); opacity: 0; }
-      }
-      .animate-ping-slow {
-        animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .animate-fade-in {
-        animation: fadeIn 0.4s ease-out forwards;
-      }
-
-      /* 3D Perspective Rules for Card Flipping */
-      .perspect-1000 {
-        perspective: 1000px;
-      }
-      .transform-style-3d {
-        transform-style: preserve-3d;
-      }
-      .backface-hidden {
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-      }
-
-      /* Base Style Overrides */
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
       body {
-        font-family: 'Inter', sans-serif;
-        background-color: #f5ecea;
-        color: #4a3a3b;
+        font-family: 'Zen Maru Gothic', sans-serif;
       }
-      input[type="date"]::-webkit-calendar-picker-indicator {
-        cursor: pointer;
-        filter: invert(0.4);
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #475569;
       }
     </style>
-    <!-- Lucide Icon Library -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-  </head>
-  <body class="min-h-screen relative overflow-x-hidden selection:bg-[#be9f9d]/30 selection:text-[#5a4648]" id="app-container">
-    
-    <!-- Dynamic Stardust Background Elements -->
-    <div class="absolute inset-0 bg-[radial-gradient(#be9f9d_1.2px,transparent_1.2px)] [background-size:28px_28px] opacity-[0.22] pointer-events-none" style="z-index: 0"></div>
-    <!-- Planetary Nebulous Glass Glow Shadows -->
-    <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#be9f9d]/15 rounded-full blur-[140px] pointer-events-none" style="z-index: 0"></div>
-    <div class="absolute bottom-[10%] right-[-5%] w-[45%] h-[45%] bg-[#aba1b8]/15 rounded-full blur-[140px] pointer-events-none" style="z-index: 0"></div>
-    <div class="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-[#be9f9d]/10 rounded-full blur-[120px] pointer-events-none" style="z-index: 0"></div>
-
-    <!-- Floating Sparkles -->
-    <div class="absolute top-20 left-[15%] text-[#be9f9d]/50 pointer-events-none text-sm font-mono animate-pulse-slow">✦</div>
-    <div class="absolute top-1/3 right-[12%] text-[#be9f9d]/40 pointer-events-none text-xs font-mono animate-pulse-slow">✦</div>
-    <div class="absolute bottom-1/4 left-[8%] text-[#aba1b8]/40 pointer-events-none text-lg font-mono animate-pulse-slow">✦</div>
-    <div class="absolute bottom-1/3 right-[18%] text-[#a66a6b]/30 pointer-events-none text-sm font-mono animate-pulse-slow">★</div>
-
-    <!-- MAIN APP WRAPPER -->
-    <div class="relative min-h-screen flex flex-col justify-between" style="z-index: 10">
-      
-      <!-- Top Sticky Navigation Bar -->
-      <header class="border-b border-[#eedddb] bg-white/75 backdrop-blur-xl sticky top-0 z-40 shadow-sm text-[#3a2829]">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#d3a9ab] to-[#bd9598] flex items-center justify-center text-white shadow-md shadow-[#eedddb]">
-              <i data-lucide="compass" class="w-5.5 h-5.5 animate-spin-slow"></i>
-            </div>
-            <div>
-              <h1 class="text-xl font-sans font-extrabold tracking-widest text-[#503536]">
-                星座每日運勢
-              </h1>
-              <p class="text-[10px] text-[#503536]/65 font-mono tracking-wider uppercase" id="header-subtitle-placements">載入中星像儀盤...</p>
-            </div>
-          </div>
-
-          <!-- Profile Trigger Toggle -->
-          <button 
-            type="button"
-            onclick="app.onOpenProfileModal()"
-            class="flex items-center gap-2.5 px-4 py-2 bg-white/90 border border-[#eedddb] hover:border-[#be9f9d]/60 hover:bg-white rounded-2xl shadow-sm transition-all duration-300 cursor-pointer group text-left"
-            id="profile-trigger-btn"
-          >
-            <div class="w-6 h-6 rounded-lg bg-[#be9f9d]/15 flex items-center justify-center text-[#9a6f71] group-hover:text-[#8a5d5f] border border-[#eedddb]/40">
-              <i data-lucide="user" class="w-3.5 h-3.5"></i>
-            </div>
-            <div>
-              <div class="text-[10px] text-[#8a7274] font-semibold tracking-wider font-sans leading-none uppercase">星像檔案</div>
-              <div class="text-xs text-[#5a4647] font-bold group-hover:text-[#8a5d5f] leading-tight mt-0.5">
-                出生位置 • <span class="underline decoration-dotted underline-offset-2" id="trigger-btn-place">台北</span>
-              </div>
-            </div>
-          </button>
-        </div>
-      </header>
-
-      <!-- Main Layout Section -->
-      <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 relative flex-1 w-full">
-        
-        <!-- Intro Hero Panel -->
-        <div id="intro-panel-container"></div>
-
-        <!-- Date Deck Control Centre -->
-        <section class="bg-white border border-[#eedddb] rounded-3xl p-5 mb-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden shadow-sm">
-          <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
-            <span class="p-2 bg-[#be9f9d]/10 text-[#a66468] rounded-2xl flex-shrink-0 border border-[#eedddb]/40">
-              <i data-lucide="calendar" class="w-5 h-5 animate-pulse"></i>
-            </span>
-            <div class="text-center sm:text-left">
-              <span class="text-[10px] text-[#8a7274] tracking-widest uppercase font-mono block">運勢運作觀測基準</span>
-              <strong class="text-base font-sans font-bold text-[#3a2829] mt-1 block" id="current-formatted-target-date">
-                0000 年 00 月 00 日 (星期)
-              </strong>
-            </div>
-          </div>
-
-          <!-- Date Adjustment Selectors -->
-          <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-center sm:justify-start">
-            <div class="flex bg-[#faf6f5] rounded-xl border border-[#eedddb] p-0.5 overflow-hidden">
-              <button 
-                onclick="app.onAdjustDate(-1)"
-                class="px-3.5 py-1.5 text-xs text-[#5a4647] hover:text-[#a66468] font-sans hover:bg-white active:scale-95 transition-all cursor-pointer border-r border-[#eedddb]"
-              >
-                ◀ 前一天
-              </button>
-              <button 
-                onclick="app.onTodayDate()"
-                class="px-3.5 py-1.5 text-xs text-[#3a2829] font-bold hover:text-[#a66468] font-sans hover:bg-white active:scale-95 transition-all cursor-pointer border-r border-[#eedddb]"
-              >
-                今天 (05/25)
-              </button>
-              <button 
-                onclick="app.onAdjustDate(1)"
-                class="px-3.5 py-1.5 text-xs text-[#5a4647] hover:text-[#a66468] font-sans hover:bg-white active:scale-95 transition-all cursor-pointer"
-              >
-                後一天 ▶
-              </button>
-            </div>
-
-            <!-- Specific Calendar input selector -->
-            <div class="flex items-center gap-2 bg-[#faf6f5] rounded-xl border border-[#eedddb] px-3 py-1">
-              <span class="text-[10px] text-[#8a7274] font-sans font-semibold">自訂:</span>
-              <input 
-                type="date"
-                id="target-date-input"
-                min="2000-01-01"
-                max="2035-12-31"
-                onchange="app.onSpecificDate(this.value)"
-                class="bg-transparent border-none text-[#3a2829] text-xs font-mono font-bold focus:outline-none cursor-pointer focus:text-[#a66468] [color-scheme:light]"
-              />
-            </div>
-          </div>
-        </section>
-
-        <!-- Navigation Tabs header -->
-        <div class="flex justify-center mb-8">
-          <div class="flex bg-white/90 p-1.5 border border-[#eedddb] rounded-2xl w-full sm:w-auto overflow-hidden shadow-sm backdrop-blur-md" id="tab-headers-holder">
-            <!-- Tabs injected dynamically via Javascript to handle selection visual states -->
-          </div>
-        </div>
-
-        <!-- Render Target Tab Content Component Container -->
-        <div class="min-h-[400px]" id="tab-contents-holder">
-          <!-- Dynamically Injected Tab layouts -->
-        </div>
-
-      </main>
-
-      <!-- Footer Panel Structure -->
-      <footer class="border-t border-[#eedddb] bg-[#e6dbda]/35 py-8 text-center text-xs text-[#8a7274] mt-20 relative z-10">
-        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p class="font-sans">
-            © 2026 星座每日運勢. 客製化專屬星盤運勢尊享版。
-          </p>
-
-          <!-- Stationary Footer back to top -->
-          <button 
-            type="button"
-            onclick="app.scrollToTop()" 
-            class="flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#eedddb] bg-white text-[#a66468] hover:bg-[#faf6f5] transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-sm font-sans font-extrabold text-xs"
-            id="footer-back-to-top-btn"
-          >
-            <i data-lucide="arrow-up" class="w-4 h-4"></i>
-            返回頂端
-          </button>
-
-          <div class="flex items-center gap-1.5 text-[10px] font-mono text-[#8a7274] hover:text-[#a66468] tracking-tighter cursor-pointer">
-            <span class="w-1.5 h-1.5 bg-[#a66468] rounded-full animate-ping"></span>
-            <span>天文算法月相模組 • 專屬精確儒略歷日軌</span>
-          </div>
-        </div>
-      </footer>
-
-    </div>
-
-    <!-- Astro Personal Profile Modal Overlay Backdrop -->
-    <div class="fixed inset-0 z-50 items-center justify-center p-4 bg-[#423435]/65 backdrop-blur-md hidden transition-all" id="profile-modal-overlay">
-      <div class="w-full max-w-lg bg-[#faf6f5] border border-[#eedddb] rounded-3xl p-6 shadow-2xl relative overflow-hidden text-left" id="profile-modal-content-container">
-        <!-- Renders viewing form mode vs edit form mode dynamically -->
-      </div>
-    </div>
-
-    <!-- Floating Back to Top Button dynamically shown/hidden on scroll -->
-    <button
-      onclick="app.scrollToTop()"
-      class="fixed bottom-8 right-8 p-3 rounded-full bg-[#a66468] hover:bg-[#905357] text-white shadow-md cursor-pointer z-50 transition-all border border-white/20 active:scale-95 flex items-center justify-center hidden"
-      id="floating-back-to-top-btn"
-      title="返回頂端"
-      aria-label="Back to top"
-    >
-      <i data-lucide="arrow-up" class="w-5 h-5"></i>
-    </button>
-
-    <!-- Unified Native JS Controller logic logic -->
-    <script src="config.js"></script>
-    <script src="script.js"></script>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "vite": "https://aistudiocdn.com/vite@^7.2.6",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "express": "https://aistudiocdn.com/express@^5.2.1",
+    "url": "https://aistudiocdn.com/url@^0.11.4"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-50 text-gray-800 dark:bg-slate-900 dark:text-gray-100 transition-colors duration-300">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

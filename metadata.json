@@ -1,6 +1,6 @@
 {
-  "name": "金牛星宇 - 個人專屬星盤與今日運勢",
-  "description": "專屬 2003 年 05 月 12 日出生金牛座的精準客製化占星盤與每日運勢指南，精密計算上升處女座、月亮天秤座等參數。包含每日塔羅、心情契合、科學月相、七日運勢走勢圖與開運法寶清單。",
+  "name": "分錄小幫手",
+  "description": "A cute and simple tool to generate accounting journal entries with automatic formatting and history tracking.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }
